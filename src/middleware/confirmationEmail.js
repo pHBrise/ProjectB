@@ -1,22 +1,46 @@
 const nodemailer = require("nodemailer");
-
+const User = require("../models/User");
 const transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
     user: "phbrise@gmail.com",
-    pass: "54823/qoIi",
+    pass: "eofb abmp hmos sshb",
   },
 });
 
-module.exports = (email, confirmationCode) => {
-  transport.sendMail({
-      from: user,
-      to: email,
-      subject: "Please confirm your account",
-      html: `<h1>Email Confirmation</h1>
-          <p>Please confirm your email by clicking on the following link</p>
-          <a href=http://localhost:4000/confirm/${confirmationCode}> Click here</a>
-          </div>`,
-    })
-    .catch((err) => console.log(err));
+module.exports.sendConfirmationEmail = async (email, confirmationCode) => {
+  const confirmationLink = `http://localhost:4000/user/email/confirm/${confirmationCode}`;
+  const mailOptions = {
+    from: transporter.user,
+    to: email,
+    subject: "Email Confirmation",
+    html: `Click the following link to confirm your email address: <a href="${confirmationLink}">${confirmationLink}</a>`,
+  };
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+};
+
+module.exports.verifyEmail = async (req, res, next) => {
+  try {
+    const token = req.params.confirmationCode;
+    console.log("Email Confirmation token:" + token);
+    const user = await User.findOneAndUpdate(
+      { confirmationCode: token },
+      { emailConfirmed: true, confirmationCode: null }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "Email confirmation failed" });
+    }
+
+    res.json({ message: "Email confirmed successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };

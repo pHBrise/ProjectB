@@ -9,17 +9,18 @@ dbConnect();
 const port = process.env.PORT || 4500
 const userRoute = require("./src/routers/userRouter");
 
-app.get("/", (req, res) => res.send("Main page")); 
+app.get("/", (req, res) => {
 
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from server!" });
+  const secretKey = require("crypto").randomBytes(32).toString("hex");
+  res.json({ message: "Hello from server!", secretKey});
 });
 
 app.listen(port, () => {
+    
     console.log(`Server running on port ${port}`)
 })
 
 
 
 app.use(express.json(), cors());
-app.use("/user", userRoute);
+app.use("/user", userRoute).config();

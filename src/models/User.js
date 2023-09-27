@@ -13,14 +13,14 @@ const userSchema = mongoose.Schema({
     max: 1024,
     min: 6,
   },
-  status: {
-    type: String, 
-      enum: ['Pending', 'Active'],
-      default: 'Pending',
+  emailConfirmed: {
+    type: Boolean,
+    default: false,
   },
-  confirmationCode: { 
-    type: String, 
-    unique: true }
+  confirmationCode: {
+    type: String,
+    unique: true,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);
