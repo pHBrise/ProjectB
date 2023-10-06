@@ -4,7 +4,7 @@ module.exports = function (req, res, next) {
   const token = req.header("Authorization");
   if (!token) return res.status(401).send("Access Denied");
   try {
-    const verified = jwt.verify(token.split(" ")[1], process.env.SECRET_TOKEN, (err, decodedToken) => {
+    const verified = jwt.verify(token, process.env.SECRET_TOKEN, (err, decodedToken) => {
       if (err) {
         return res.status(401).json({ message: 'Invalid token' });
       }

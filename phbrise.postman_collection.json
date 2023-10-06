@@ -1,0 +1,242 @@
+{
+	"info": {
+		"_postman_id": "db7e4ee3-bb7e-4022-82fa-f3e9d253a308",
+		"name": "phbrise",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3715675"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"phbrise@gmail.com\",\n    \"password\":\"1234Qwer-\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"phbrise@gmail.com\",\n    \"password\":\"1234Qwer-\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile",
+			"request": {
+				"auth": {
+					"type": "jwt",
+					"jwt": [
+						{
+							"key": "algorithm",
+							"value": "HS256",
+							"type": "string"
+						},
+						{
+							"key": "isSecretBase64Encoded",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "payload",
+							"value": "{\n    \"_id\":\"6512718e3e09d5d731fd9c07\",\n    \"email\":\"phbrise@gmail.com\"\n}",
+							"type": "string"
+						},
+						{
+							"key": "secret",
+							"value": "5117cdbe0f77bc08d9618710d1fd0183e0c89c29d5bf992a202d8504055b1c8c",
+							"type": "string"
+						},
+						{
+							"key": "header",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "headerPrefix",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "queryParamKey",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTBkMzZjYTU5NWE1OTZlZDQ0YzJkNzgiLCJpYXQiOjE2OTUzNzM0NjcsImV4cCI6MTY5Nzk2NTQ2N30.Y-qgw6cftVXcgoA26OtzGk5rJy2oWvw5CXxi-OW3OBM",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/user/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"user",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Email Confirmation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/user/email/confirm/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBoYnJpc2VAZ21haWwuY29tIiwiaWF0IjoxNjk1NzA3MzcwLCJleHAiOjE2OTU3OTM3NzB9.EJZyffuMgX3tc54PUdTlT17sd4UHdH6cN4I69nMwNQA",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"user",
+						"email",
+						"confirm",
+						"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBoYnJpc2VAZ21haWwuY29tIiwiaWF0IjoxNjk1NzA3MzcwLCJleHAiOjE2OTU3OTM3NzB9.EJZyffuMgX3tc54PUdTlT17sd4UHdH6cN4I69nMwNQA"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new password",
+			"request": {
+				"auth": {
+					"type": "jwt",
+					"jwt": [
+						{
+							"key": "algorithm",
+							"value": "HS256",
+							"type": "string"
+						},
+						{
+							"key": "isSecretBase64Encoded",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "payload",
+							"value": "{\n    \"_id\":\"6512718e3e09d5d731fd9c07\",\n    \"email\":\"phbrise@gmail.com\"\n}",
+							"type": "string"
+						},
+						{
+							"key": "secret",
+							"value": "5117cdbe0f77bc08d9618710d1fd0183e0c89c29d5bf992a202d8504055b1c8c",
+							"type": "string"
+						},
+						{
+							"key": "header",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "headerPrefix",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "queryParamKey",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\":\"1234Qwer^\",\n    \"new_password\":\"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/user/newpassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"user",
+						"newpassword"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:3000/"
+		}
+	]
+}
