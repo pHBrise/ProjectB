@@ -11,15 +11,19 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
     max: 1024,
-    min: 6,
+    min: 8,
   },
-  emailConfirmed: {
+  email_confirmed: {
     type: Boolean,
     default: false,
   },
-  confirmationCode: {
+  secret_login: {
     type: String,
     unique: true,
+  },
+  profile: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Profile',
   },
 });
 

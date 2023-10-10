@@ -30,8 +30,8 @@ module.exports.verifyEmail = async (req, res, next) => {
     const token = req.params.confirmationCode;
     console.log("Email Confirmation token:" + token);
     const user = await User.findOneAndUpdate(
-      { confirmationCode: token },
-      { emailConfirmed: true, confirmationCode: null }
+      { secret_login: token },
+      { email_confirmed: true, secret_login: null }
     );
 
     if (!user) {

@@ -8,11 +8,12 @@ dbConnect();
 
 const port = process.env.PORT || 4500
 const userRoute = require("./app/routers/user");
+const profileRoute = require("./app/routers/profile");
 
-app.get("/", (req, res) => {
-  const secretKey = require("crypto").randomBytes(32).toString("hex");
-  res.json({ message: "Hello from server!", secretKey });
-});
+// app.get("/", (req, res) => {
+//   const secretKey = require("crypto").randomBytes(32).toString("hex");
+//   res.json({ message: "Hello from server!", secretKey });
+// });
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
@@ -22,3 +23,4 @@ app.listen(port, () => {
 
 app.use(express.json(), cors());
 app.use("/user", userRoute);
+app.use("/profile", profileRoute);
