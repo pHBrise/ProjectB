@@ -1,4 +1,5 @@
 const userModel = require("../models/User");
+const profileModel = require("../models/Profile");
 const confirmationEmail = require("./confirmationEmail");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -17,7 +18,7 @@ const registerSchema = joi.object({
 });
 
 module.exports.register = async (req, res) => {
-    const emailExist = await userModel.findOne({ email: req.body.email });
+    const emailExist = await profileModel.findOne({ email: req.body.email });
     if (emailExist) {
         res.status(400).json({
             success: false,
@@ -43,18 +44,25 @@ module.exports.register = async (req, res) => {
             });
             //ON PROCESS OF ADDING NEW USER
             const newUser = new userModel({
-                email: req.body.email,
                 password: hashedPassword,
                 secret_login: token,
             });
-
+            const profile = new profileModel({
+                user:newUser._id,
+                first_name: null,
+                last_name: null,
+                email: req.body.email,
+                mobile_number: null,
+                date_of_birth:null,
+            })
             await newUser.save();
+            await profile.save();
             res.status(200).json({
                 success: true,
                 message: "Create User Success"
             })
             confirmationEmail.sendConfirmationEmail(
-                newUser.email,
+                profile.email,
                 newUser.secret_login
             );
         }
@@ -74,13 +82,13 @@ const userLoginSchema = joi.object({
 });
 
 module.exports.login = async (req, res) => {
-    const user = await userModel.findOne({ email: req.body.email });
-    if (!user) return res.status(400).json({
+    const profile = await profileModel.findOne({ email: req.body.email });
+    if (!profile) return res.status(400).json({
         success: false,
         message: "Incorrect Email",
-        data: user
+        data: null
     })
-
+    const user = await userModel.findOne({_id: profile.user})
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword) return res.status(400).json({ message: "Invalid Password" });
     const emailConfirmed = user.email_confirmed;

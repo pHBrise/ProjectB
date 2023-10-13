@@ -4,10 +4,10 @@ const jwt = require("jsonwebtoken");
 const joi = require("joi");
 
 module.exports.getProfile = async(req, res) => {
-    const userId = req.userId;
+    const playload = req.playload;
 
   try {
-    const userProfile = await profileModel.findOne({ user: userId });
+    const userProfile = await profileModel.findOne({ user: playload._id });
 
     if (!userProfile) {
       return res.status(404).json({ error: 'User profile not found' });
