@@ -22,5 +22,16 @@ module.exports.getProfile = async(req, res) => {
 }
 
 module.exports.updateProfile = async(req, res) => {
+  const playload = req.playload;
+  try {
+    const userProfile = await profileModel.findOne({ user: playload._id });
 
+    if (!userProfile) {
+      return res.status(404).json({ error: 'User profile not found' });
+    }
+    
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 }

@@ -14,11 +14,7 @@ const userSchema = mongoose.Schema({
   secret_login: {
     type: String,
     unique: true,
-  },
-  profile: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Profile',
-  },
+  }
 });
 
 module.exports = mongoose.model("User", userSchema);
