@@ -17,6 +17,9 @@ const profileSchema = mongoose.Schema(
       max: 50,
       min: 0,
     },
+    image: {
+
+    },
     email: {
       type: String,
       required: true,
