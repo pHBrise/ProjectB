@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const profileController = require("../controllers/profile");
-const authToken = require("../controllers/authToken");
+const auth = require("../controllers/auth");
 
 router.get("/", authToken, profileController.getProfile);
 

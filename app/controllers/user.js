@@ -101,22 +101,19 @@ module.exports.login = async (req, res) => {
             error: error
         });
         else {
-            const secret_login = crypto.randomBytes(32).toString("hex");
-            user.secret_login = secret_login
+            if (!user.secret_login) {
+                user.secret_login = crypto.randomBytes(32).toString("hex");
+            }
             await user.save();
-            const token = jwt.sign({ _id: user._id, email: user.email, secret_login: user.secret_login }, process.env.SECRET_TOKEN, {
+            const login_token = jwt.sign({ _id: user._id, email: user.email, secret_login: user.secret_login }, process.env.SECRET_TOKEN, {
                 expiresIn: "1m",
-            });
-            const asset_token = jwt.sign({ _id: user._id, secret_login: user.secret_login }, process.env.SECRET_TOKEN, {
-                expiresIn: "1d",
             });
             res.status(200).send({
                 success: true,
                 message: 'Login Success',
                 data: {
                     user: user,
-                    login_token: token,
-                    asset_token: asset_token
+                    login_token: login_token
                 },
             });
         }
@@ -143,7 +140,7 @@ module.exports.setupNewPassword = async (req, res) => {
             user.password = hashedPassword
             await user.save();
             const asset_token = jwt.sign({ _id: user._id }, process.env.SECRET_TOKEN, {
-                expiresIn: "1d",
+                expiresIn: "1h",
             });
             const login_token = jwt.sign({ _id: user._id, email: user.email }, process.env.SECRET_TOKEN, {
                 expiresIn: "1m",
