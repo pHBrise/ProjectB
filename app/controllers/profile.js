@@ -1,15 +1,13 @@
 const userModel = require("../models/User");
 const profileModel = require("../models/Profile");
-const multer = require('multer');
-const { GridFsStorage } = require('multer-gridfs-storage');
 const jwt = require("jsonwebtoken");
 const joi = require("joi");
 
 module.exports.getProfile = async (req, res) => {
-  const playload = req.playload;
+  const user = req.user;
 
   try {
-    const userProfile = await profileModel.findOne({ user: playload._id });
+    const userProfile = await profileModel.findOne({ user: user._id });
 
     if (!userProfile) {
       return res.status(404).json({ error: 'User profile not found' });
@@ -23,7 +21,7 @@ module.exports.getProfile = async (req, res) => {
 
 }
 
-module.exports.updateProfile = upload.single('image'), async (req, res) => {
+module.exports.updateProfile = async (req, res) => {
   const user = req.user;
   try {
     const userProfile = await profileModel.findOne({ user: user._id });
@@ -31,29 +29,23 @@ module.exports.updateProfile = upload.single('image'), async (req, res) => {
     if (!userProfile) {
       return res.status(404).json({ error: 'User profile not found' });
     }
-
     // Get the user profile data
     const updateProfile = req.body;
-
-    // Save the user profile image to GridFS
-    const image = await storage.create({
-      filename: req.file.originalname,
-      contentType: req.file.mimetype,
-    });
-    await image.write(req.file.buffer);
-
     // Save the user profile to MongoDB
+    if (req.file) {
+      if (req.file.path) userProfile.image = req.file.path
+    }
     if (updateProfile.first_name) userProfile.first_name = updateProfile.first_name
     if (updateProfile.last_name) userProfile.last_name = updateProfile.last_name
-    if (updateProfile.first_name) userProfile.first_name = updateProfile.first_name
-    if (updateProfile.first_name) userProfile.first_name = updateProfile.first_name
-    if (updateProfile.first_name) userProfile.first_name = updateProfile.first_name
-
+    if (updateProfile.email) userProfile.email = updateProfile.email
+    if (updateProfile.mobile_number) userProfile.mobile_number = updateProfile.mobile_number
+    if (updateProfile.date_of_birth) userProfile.date_of_birth = updateProfile.date_of_birth
+    await userProfile.save()
     // Respond with the user profile
     res.json(userProfile);
 
   } catch (error) {
     console.error('Error fetching user profile:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({message: error.message});
   }
 }

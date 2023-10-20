@@ -13,10 +13,10 @@ module.exports.verifyToken = async (req, res, next) => {
       if (user) {
         req.user = user;
         next();
-      } else return res.status(401).json({ message: 'Invalid token' });
+      } else return res.status(401).json({ message: 'Invalid user' });
     });
   } catch (error) {
-    res.status(400).send("Invalid token");
+    res.status(500).send(error.message);
   }
 };
 

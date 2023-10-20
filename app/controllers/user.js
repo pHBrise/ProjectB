@@ -130,8 +130,7 @@ const newPasswordSchema = joi.object({
 });
 
 module.exports.setupNewPassword = async (req, res) => {
-    const playload = req.playload
-    const user = await userModel.findOne({ _id: playload._id, secret_login: playload.secret_login });
+    const user = await userModel.findOne({ _id: req.user._id, secret_login: req.user.secret_login });
     if (user) {
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if (validPassword) {
