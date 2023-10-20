@@ -38,6 +38,51 @@
 		{
 			"name": "login",
 			"request": {
+				"auth": {
+					"type": "jwt",
+					"jwt": [
+						{
+							"key": "payload",
+							"value": "{\n    \"_id\": \"652653b78ba1648bc9f43d34\",\n    \"secret_login\": \"910c71246ddbed701acb48125deafd1f12fdf6dc5aaffb3afb76594e1527a2f9\"\n}",
+							"type": "string"
+						},
+						{
+							"key": "secret",
+							"value": "5117cdbe0f77bc08d9618710d1fd0183e0c89c29d5bf992a202d8504055b1c8c",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "HS256",
+							"type": "string"
+						},
+						{
+							"key": "isSecretBase64Encoded",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "headerPrefix",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "queryParamKey",
+							"value": "token",
+							"type": "string"
+						},
+						{
+							"key": "header",
+							"value": "{}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -66,10 +111,23 @@
 		},
 		{
 			"name": "profile",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"auth": {
 					"type": "jwt",
 					"jwt": [
+						{
+							"key": "payload",
+							"value": "{\n    \"_id\": \"652653b78ba1648bc9f43d34\",\n    \"secret_login\": \"910c71246ddbed701acb48125deafd1f12fdf6dc5aaffb3afb76594e1527a2f9\"\n}",
+							"type": "string"
+						},
+						{
+							"key": "secret",
+							"value": "5117cdbe0f77bc08d9618710d1fd0183e0c89c29d5bf992a202d8504055b1c8c",
+							"type": "string"
+						},
 						{
 							"key": "algorithm",
 							"value": "HS256",
@@ -79,16 +137,6 @@
 							"key": "isSecretBase64Encoded",
 							"value": false,
 							"type": "boolean"
-						},
-						{
-							"key": "payload",
-							"value": "{\n    \"_id\":\"6512718e3e09d5d731fd9c07\",\n    \"email\":\"phbrise@gmail.com\"\n}",
-							"type": "string"
-						},
-						{
-							"key": "secret",
-							"value": "5117cdbe0f77bc08d9618710d1fd0183e0c89c29d5bf992a202d8504055b1c8c",
-							"type": "string"
 						},
 						{
 							"key": "header",
@@ -121,15 +169,23 @@
 						"disabled": true
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:4000/user/profile",
+					"raw": "http://localhost:4000/profile",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "4000",
 					"path": [
-						"user",
 						"profile"
 					]
 				}
@@ -165,6 +221,11 @@
 					"type": "jwt",
 					"jwt": [
 						{
+							"key": "payload",
+							"value": "{\n    \"_id\": \"652653b78ba1648bc9f43d34\",\n    \"secret_login\": \"910c71246ddbed701acb48125deafd1f12fdf6dc5aaffb3afb76594e1527a2f9\"\n}",
+							"type": "string"
+						},
+						{
 							"key": "algorithm",
 							"value": "HS256",
 							"type": "string"
@@ -173,11 +234,6 @@
 							"key": "isSecretBase64Encoded",
 							"value": false,
 							"type": "boolean"
-						},
-						{
-							"key": "payload",
-							"value": "{\n    \"_id\":\"6512718e3e09d5d731fd9c07\",\n    \"email\":\"phbrise@gmail.com\"\n}",
-							"type": "string"
 						},
 						{
 							"key": "secret",
@@ -210,7 +266,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"password\":\"1234Qwer^\",\n    \"new_password\":\"123456\"\n}",
+					"raw": "{\n    \"password\":\"KpO26^2UUW\",\n    \"new_password\":\"KpO26--dswW\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -227,6 +283,91 @@
 					"path": [
 						"user",
 						"newpassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Profile",
+			"request": {
+				"auth": {
+					"type": "jwt",
+					"jwt": [
+						{
+							"key": "payload",
+							"value": "{\n    \"_id\": \"652653b78ba1648bc9f43d34\",\n    \"secret_login\": \"910c71246ddbed701acb48125deafd1f12fdf6dc5aaffb3afb76594e1527a2f9\"\n}",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "HS256",
+							"type": "string"
+						},
+						{
+							"key": "isSecretBase64Encoded",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "secret",
+							"value": "5117cdbe0f77bc08d9618710d1fd0183e0c89c29d5bf992a202d8504055b1c8c",
+							"type": "string"
+						},
+						{
+							"key": "header",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "headerPrefix",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "queryParamKey",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "first_name",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/Users/phanvit/Desktop/19758a_262459d28b5a4518be93c5a5c2fc83f4_mv2.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4000/profile/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"profile",
+						"update"
 					]
 				}
 			},
