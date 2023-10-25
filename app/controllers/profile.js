@@ -33,7 +33,7 @@ module.exports.updateProfile = async (req, res) => {
     const updateProfile = req.body;
     // Save the user profile to MongoDB
     if (req.file) {
-      if (req.file.path) userProfile.image = req.file.path
+      userProfile.image = req.file.originalname
     }
     if (updateProfile.first_name) userProfile.first_name = updateProfile.first_name
     if (updateProfile.last_name) userProfile.last_name = updateProfile.last_name
@@ -46,6 +46,7 @@ module.exports.updateProfile = async (req, res) => {
 
   } catch (error) {
     console.error('Error fetching user profile:', error);
-    res.status(500).json({message: error.message});
+    res.status(500).json({ message: error.message });
   }
 }
+

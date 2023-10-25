@@ -4,6 +4,7 @@ const auth = require("../controllers/auth");
 const fileManager = require("../controllers/filemanager");
 
 router.get("/", auth.verifyToken, profileController.getProfile);
-router.put("/update", auth.verifyToken, fileManager.uploadProfileImage, profileController.updateProfile);
+router.put("/update", auth.verifyToken, fileManager.singleFileUpload, profileController.updateProfile);
+router.get("/:userId/:image",fileManager.getProfileImage);
 
 module.exports = router;

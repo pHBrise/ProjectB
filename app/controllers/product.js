@@ -9,8 +9,13 @@ module.exports.addProduct = async (req, res) => {
     const product = new productModel({
         title:req.body.title,
         description:req.body.description,
-        
+        product_image:req.files.map(file => {file.originalname}),
+        category:req.body.category,
+
     })
+
+    const productq = new productModel({req.body.product})
+
 
     try {
         const userProfile = await profileModel.findOne({ user: playload._id });
