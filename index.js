@@ -1,5 +1,8 @@
 const express = require("express");
 const cors = require("cors");
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const dbConnect = require("./app/database/database");
 const app = express()
 
@@ -17,6 +20,42 @@ app.listen(port, () => {
 })
 
 app.use(express.json(), cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static('public'));
+app.set('view engine', 'ejs');
+
+// Passport setup
+passport.use(
+  new LocalStrategy((email, password, done) => {
+    console.log(email)
+    User.findOne({ email: email }, (err, user) => {
+      if (err) return done(err);
+      if (!user) return done(null, false, { message: 'Incorrect username.' });
+      if (!bcrypt.compareSync(password, user.password))
+        return done(null, false, { message: 'Incorrect password.' });
+      return done(null, user);
+    });
+  })
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id, (err, user) => {
+    done(err, user);
+  });
+});
+
+
+app.get('/', (req, res) => {
+  res.render(__dirname + '/app/view/index');
+});
+
 app.use("/auth", authRoute);
 app.use("/user", userRoute);
 app.use("/profile", profileRoute);

@@ -48,23 +48,27 @@ module.exports.multipleFileUpload = async (req, res, next) => {
     if (err) {
       return res.status(400).send('Upload failed.');
     }
-    const uploadPromises = req.files.map(async (file) => {
-      const fileName = file.originalname;
-      const fileUpload = bucket.file(fileName);
-      const blobStream = fileUpload.createWriteStream();
-
-      blobStream.on('error', (error) => {
-        console.error(error);
+    if (req.files) {
+      const uploadPromises = req.files.map(async (file) => {
+        const fileName = file.originalname;
+        const fileUpload = bucket.file(fileName);
+        const blobStream = fileUpload.createWriteStream();
+  
+        blobStream.on('error', (error) => {
+          console.error(error);
+        });
+  
+        blobStream.on('finish', () => {
+          console.log(`Uploaded: ${fileName}`);
+        });
+  
+        blobStream.end(file.buffer);
       });
-
-      blobStream.on('finish', () => {
-        console.log(`Uploaded: ${fileName}`);
-      });
-
-      blobStream.end(file.buffer);
-    });
-    await Promise.all(uploadPromises);
-    res.status(200).send('Files uploaded successfully.');
+      await Promise.all(uploadPromises);
+      res.status(200).send('Files uploaded successfully.');
+    } else {
+      next()
+    }
   });
 }
 

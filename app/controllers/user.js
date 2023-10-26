@@ -115,7 +115,7 @@ module.exports.login = async (req, res) => {
                     user: user,
                     login_token: login_token
                 },
-            });
+            }).rander;
         }
     } catch (error) {
         return res.status(500).send(error);
