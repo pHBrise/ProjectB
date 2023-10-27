@@ -56,6 +56,14 @@ app.get('/', (req, res) => {
   res.render(__dirname + '/app/view/index');
 });
 
+app.get('/home', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.render(__dirname + '/app/view/home');
+  } else {
+    res.redirect('/');
+  }
+});
+
 app.use("/auth", authRoute);
 app.use("/user", userRoute);
 app.use("/profile", profileRoute);

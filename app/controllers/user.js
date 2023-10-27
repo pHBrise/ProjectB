@@ -108,14 +108,14 @@ module.exports.login = async (req, res) => {
             const login_token = jwt.sign({ _id: user._id, email: user.email, secret_login: user.secret_login }, process.env.SECRET_TOKEN, {
                 expiresIn: "1m",
             });
-            res.status(200).send({
+            res.status(200).json({
                 success: true,
                 message: 'Login Success',
                 data: {
                     user: user,
                     login_token: login_token
                 },
-            }).rander;
+            });
         }
     } catch (error) {
         return res.status(500).send(error);
