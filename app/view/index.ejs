@@ -11,8 +11,9 @@
 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-
+    const token = localStorage.getItem('token');
     fetch('/user/login', {
+      Authorization: token,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
