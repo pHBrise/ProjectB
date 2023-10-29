@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const profileController = require("../controllers/profile");
-const auth = require("../controllers/auth");
+const auth = require("../middleware/auth");
 const fileManager = require("../middleware/filemanager");
 
 router.get("/", auth.verifyToken, profileController.getProfile);
