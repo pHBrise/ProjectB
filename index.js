@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const session = require('express-session');
 const dbConnect = require("./app/database/database");
-const configPassport = require("./app/config/config.passport");
+
 const app = express()
 
 require('dotenv').config();
@@ -21,13 +21,15 @@ app.listen(port, () => {
 app.use(express.json(), cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
-app.use(configPassport.passport.initialize());
-app.use(configPassport.passport.session());
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-  res.render(__dirname + '/app/view/index');
+  if (req.isAuthenticated()) {
+    res.render(__dirname + '/app/view/home');
+  } else {
+    res.redirect('/');
+  }
 });
 
 app.get('/home', (req, res) => {

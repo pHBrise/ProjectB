@@ -1,8 +1,8 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const passportJwt = require("passport-jwt")
+const passportJwt = require("passport-jwt");
 const JWTStrategy = passportJwt.Strategy;
-const ExtractJWT = passportJwt.ExtractJwt;
+const ExtractJwt = passportJwt.ExtractJwt;
 const bcrypt = require("bcryptjs");
 const userModel = require("../models/User");
 
@@ -24,16 +24,30 @@ passport.use(new LocalStrategy({
     });
 }));
 
-passport.use(new JWTStrategy({
-    secretOrKey: process.env.SECRET_TOKEN,
-    jwtFromRequest: ExtractJWT.fromAuthHeader()
-}, async (payload, done) => {
+const jwtFromRequest = (req) => {
+    const token = req.header("Authorization");
+    if (token) {
+      const parts = token.split(' ');
+      if (parts[0] === 'JWT') {
+        return parts[1];
+      }
+    }
+    return null;
+  };
+
+
+const opts = {}
+opts.jwtFromRequest = jwtFromRequest;
+opts.secretOrKey = process.env.SECRET_TOKEN;
+
+passport.use(new JWTStrategy(opts, async (payload, done) => {
     // Implement JWT authentication logic
+    console.log("payload")
     const user = await userModel.findOne({ _id: payload._id, secret_login: payload.secret_login })
-    if (user) {
-      req.user = user;
-      next();
-    } else return res.status(401).json({ message: 'Invalid user' });
+    if (!user) {
+        return done(null, false);
+    }
+    return done(null, user);
 }));
 
 passport.serializeUser((user, done) => {
