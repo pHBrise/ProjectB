@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Home Page</title>
+</head>
+
+<body>
+  <h1>Welcome to the Home Page</h1>
+  <p id="data"></p>
+  <button id="logout">Logout</button>
+
+  <script>
+    // ดึง token จาก localStorage
+    const token = localStorage.getItem('token');
+
+    // ถ้าไม่มี token, นำผู้ใช้ไปยังหน้า login
+    if (!token) {
+      render
+    }
+
+    // ดึงข้อมูลจาก API โดยใช้ token
+    fetch('/auth/token', {
+      method: 'POST',
+      headers: {
+        'Authorization': token,
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          // ถ้าไม่สามารถตรวจสอบ token, นำผู้ใช้ไปยังหน้า login
+          window.location.href = '/';
+        }
+      })
+      .then((data) => {
+        document.getElementById('data').textContent = data.message;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    // สร้างการออกจากระบบ
+    document.getElementById('logout').addEventListener('click', () => {
+      localStorage.removeItem('token'); // ลบ token ออกจาก localStorage
+      window.location.href = '/login'; // นำผู้ใช้ไปยังหน้า login
+    });
+  </script>
+</body>
+
+</html>

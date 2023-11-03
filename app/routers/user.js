@@ -7,7 +7,7 @@ const confirmationEmail = require("../controllers/confirmationEmail");
 // Register 
 router.post("/register", userController.register);
 router.post("/login", userController.login);
-router.post("/newpassword", auth.verifyToken, userController.setupNewPassword);
+router.post("/newpassword", auth.verifyLoginToken, userController.setupNewPassword);
 
 router.get(
   "/email/confirm/:confirmationCode",

@@ -10,6 +10,7 @@ dbConnect();
 
 const port = process.env.PORT || 4500
 const authRoute = require("./app/routers/auth");
+const renderRoute = require("./app/routers/render");
 const userRoute = require("./app/routers/user");
 const profileRoute = require("./app/routers/profile");
 const productRoute = require("./app/routers/product");
@@ -24,22 +25,7 @@ app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render(__dirname + '/app/view/home');
-  } else {
-    res.redirect('/');
-  }
-});
-
-app.get('/home', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render(__dirname + '/app/view/home');
-  } else {
-    res.redirect('/');
-  }
-});
-
+app.use("", renderRoute);
 app.use("/auth", authRoute);
 app.use("/user", userRoute);
 app.use("/profile", profileRoute);

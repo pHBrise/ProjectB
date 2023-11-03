@@ -3,6 +3,6 @@ const authToken = require("../middleware/auth");
 
 
 // Request New Token 
-router.post("/token",authToken.verifyToken, authToken.getNewToken);
+router.post("/token",authToken.verifyLoginToken, authToken.getNewAssetToken);
 
 module.exports = router;
