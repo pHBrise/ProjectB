@@ -10,7 +10,7 @@ dbConnect();
 
 const port = process.env.PORT || 4500
 const authRoute = require("./app/routers/auth");
-const renderRoute = require("./app/routers/render");
+const viewRoute = require("./app/routers/view");
 const userRoute = require("./app/routers/user");
 const profileRoute = require("./app/routers/profile");
 const productRoute = require("./app/routers/product");
@@ -25,7 +25,7 @@ app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-app.use("", renderRoute);
+app.use("", viewRoute);
 app.use("/auth", authRoute);
 app.use("/user", userRoute);
 app.use("/profile", profileRoute);
